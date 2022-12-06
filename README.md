@@ -1,2 +1,3 @@
 # SnakeGame
- Snake Game written in Java
+ 
+Snake Game written in Java using Swing library. 
