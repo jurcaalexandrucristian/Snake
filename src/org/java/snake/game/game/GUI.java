@@ -1,4 +1,4 @@
-package org.java.snake.game;
+package org.java.snake.game.game;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -6,29 +6,34 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.java.snake.game.model.Food;
+import org.java.snake.game.model.Snake;
+
 public class GUI {
-	static JFrame f1;
-	static JPanel p1;
+	static JFrame frame;
+	static JPanel panel;
 	private Snake snake;
-	private SnakeGame snakeGame;
+	private Game snakeGame;
 	private Food food;
 	private Font fontMenu;
 	private Font fontHeader;
 	
 	public GUI() {
-    	snakeGame = new SnakeGame();
+    	snakeGame = new Game();
     	snakeGame.setSnakeGame(snakeGame);
 	}
 	
 	public void createGameWindow() {	
-		f1 = new JFrame("Snake");
-		f1.setSize(675, 395);
-		f1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame = new JFrame("Snake Game");
+		frame.setSize(1555, 800);
+		frame.setResizable(false);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -36,19 +41,21 @@ public class GUI {
 			e.printStackTrace();
 		}
 		
-		f1.setLocationRelativeTo(null);
-		p1 = new Draw();
-		p1.setLayout(null);
-		f1.add(p1);
+		frame.setLocationRelativeTo(null);
+		panel = new Draw();
+		panel.setLayout(null);
+		frame.add(panel);
 		
 	    fontMenu = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
 	    fontHeader = new Font(Font.SANS_SERIF, Font.BOLD, 16);
 		
-		f1.requestFocus();	
-		f1.repaint();
-		f1.setVisible(true);
+		frame.requestFocus();	
+		frame.repaint();
+		ImageIcon icon = new ImageIcon(getClass().getResource("../../../../../res/snake.png"));
+		frame.setIconImage(icon.getImage());
+		frame.setVisible(true);
 
-		f1.addKeyListener(new KeyListener() {
+		frame.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {}
 
@@ -69,14 +76,14 @@ public class GUI {
 			public void keyReleased(KeyEvent e) {}
 		});	
 	}
-	
+
 	class Draw extends JPanel {	
 		private static final long serialVersionUID = 1L;
-
+	
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			Graphics2D g2 = (Graphics2D) g;
-
+	
 			if (snakeGame.isStarted() == true) {
 				if (snakeGame.isPause() == true)
 					drawPauseMenu(g2);
@@ -99,20 +106,20 @@ public class GUI {
 		else if (e.getKeyCode() == 38) {
 			if (snakeGame.getMenuSelection().equals("Exit game")) {
 				snakeGame.setMenuSelection("Back to main menu");
-				GUI.f1.repaint();
+				GUI.frame.repaint();
 			} else if (snakeGame.getMenuSelection().equals("Back to main menu")) {
 				snakeGame.setMenuSelection("Restart game");
-				GUI.f1.repaint();
+				GUI.frame.repaint();
 			}
 		} else if (e.getKeyCode() == 40) {
 			if (snakeGame.getMenuSelection().equals("Restart game")) {
 				snakeGame.setMenuSelection("Back to main menu");
-				GUI.f1.repaint();
+				GUI.frame.repaint();
 			} else if(snakeGame.getMenuSelection().equals("Back to main menu")) {
 				snakeGame.setMenuSelection("Exit game");
-				GUI.f1.repaint();
+				GUI.frame.repaint();
 			}		
-		} else if(e.getKeyCode() == 10) {
+		} else if (e.getKeyCode() == 10) {
 			switch(snakeGame.getMenuSelection()) {
 			case "Restart game":
 				snakeGame.restartGame();
@@ -126,35 +133,35 @@ public class GUI {
 				snakeGame.restartGame();
 				snakeGame.setStartmenu(true);
 				snakeGame.setMenuSelection("Start game");
-				GUI.f1.repaint();
+				GUI.frame.repaint();
 				break;
 			}
 		}
 	}
 	
 	public void checkCurrentGameInputs(KeyEvent e) {
-		if (e.getKeyCode() == 38) {
+		if (e.getKeyCode() == 38 || e.getKeyCode() == 87) {
 			if (snake.isSnakeDown() == false) {
 				snake.setSnakeDown(false);
 				snake.setSnakeRight(false);
 				snake.setSnakeLeft(false);
 				snake.setSnakeUp(true);
 			}
-		} else if (e.getKeyCode() == 40) {
+		} else if (e.getKeyCode() == 40 || e.getKeyCode() == 83) {
 			if (snake.isSnakeUp() == false) {
 				snake.setSnakeUp(false);
 				snake.setSnakeRight(false);
 				snake.setSnakeLeft(false);
 				snake.setSnakeDown(true);
 			}
-		} else if (e.getKeyCode() == 37) {
+		} else if (e.getKeyCode() == 37 || e.getKeyCode() == 65) {
 			if (snake.isSnakeRight() == false) {
 				snake.setSnakeUp(false);
 				snake.setSnakeRight(false);
 				snake.setSnakeDown(false);
 				snake.setSnakeLeft(true);
 			}
-		}else if (e.getKeyCode() == 39) {
+		}else if (e.getKeyCode() == 39 || e.getKeyCode() == 68) {
 			if (snake.isSnakeLeft() == false) {
 				snake.setSnakeUp(false);
 				snake.setSnakeLeft(false);
@@ -169,12 +176,12 @@ public class GUI {
 		if (e.getKeyCode() == 38) {
 			if (snakeGame.getMenuSelection().equals("Exit game")) {
 				snakeGame.setMenuSelection("Restart game");
-				GUI.f1.repaint();
+				GUI.frame.repaint();
 			}	
 		} else if (e.getKeyCode() == 40) {
 			if (snakeGame.getMenuSelection().equals("Restart game")) {
 				snakeGame.setMenuSelection("Exit game");
-				GUI.f1.repaint();
+				GUI.frame.repaint();
 			}	
 		} else if (e.getKeyCode() == 10) {
 			switch(snakeGame.getMenuSelection()) {
@@ -193,28 +200,28 @@ public class GUI {
 		if (e.getKeyCode() == 38) {
 			if (snakeGame.getMenuSelection().equals("Exit game")) {
 				snakeGame.setMenuSelection("Difficulty");
-				GUI.f1.repaint();
+				GUI.frame.repaint();
 			} else if (snakeGame.getMenuSelection().equals("Difficulty")) {
 				snakeGame.setMenuSelection("Start game");
-				GUI.f1.repaint();
+				GUI.frame.repaint();
 			}	
 		} else if (e.getKeyCode() == 40) {
 			if (snakeGame.getMenuSelection().equals("Start game")) {
 				snakeGame.setMenuSelection("Difficulty");
-				GUI.f1.repaint();
+				GUI.frame.repaint();
 			} else if (snakeGame.getMenuSelection().equals("Difficulty")) {
 				snakeGame.setMenuSelection("Exit game");
-				GUI.f1.repaint();
+				GUI.frame.repaint();
 			}	
 		} else if (e.getKeyCode() == 39) {
-			if (snakeGame.getMenuSelection().equals("Difficulty") && snakeGame.getDifficultyLevel()!=2) {
-				snakeGame.setDifficultyLevel(snakeGame.getDifficultyLevel()+1);
-				GUI.f1.repaint();
+			if (snakeGame.getMenuSelection().equals("Difficulty") && snakeGame.getDifficultyLevel() != 2) {
+				snakeGame.setDifficultyLevel(snakeGame.getDifficultyLevel() + 1);
+				GUI.frame.repaint();
 			}	
 		} else if (e.getKeyCode() == 37) {
-			if (snakeGame.getMenuSelection().equals("Difficulty") && snakeGame.getDifficultyLevel()!=0) {
-				snakeGame.setDifficultyLevel(snakeGame.getDifficultyLevel()-1);
-				GUI.f1.repaint();
+			if (snakeGame.getMenuSelection().equals("Difficulty") && snakeGame.getDifficultyLevel() != 0) {
+				snakeGame.setDifficultyLevel(snakeGame.getDifficultyLevel() - 1);
+				GUI.frame.repaint();
 			}
 		} else if (e.getKeyCode() == 10) {
 			switch(snakeGame.getMenuSelection()) {
@@ -230,36 +237,36 @@ public class GUI {
 
 	public void drawPauseMenu(Graphics2D g2) {
 		g2.setColor(Color.BLACK);
-		g2.fillRect(0, 0, 400, 400);
+		g2.fillRect(470, 100, 600, 400);
 		g2.setColor(Color.WHITE);
 		g2.setFont(fontHeader);
-		g2.drawString("Pause menu", 100, 100);
+		g2.drawString("Pause menu", 720, 170);
 		g2.setFont(fontMenu);
-		g2.drawString("Restart game", 100, 200);
-		g2.drawString("Back to main menu", 100, 250);
-		g2.drawString("Exit game", 100, 300);
+		g2.drawString("Restart game", 720, 250);
+		g2.drawString("Back to main menu", 720, 300);
+		g2.drawString("Exit game", 720, 350);
 		
 		switch (snakeGame.getMenuSelection()) {
 		  case "Restart game":
-			g2.fillOval(70, 190, 10, 10);
+			g2.fillOval(690, 240, 10, 10);
 			break; 
 		  case "Back to main menu":
-			g2.fillOval(70, 240, 10, 10);
+			g2.fillOval(690, 290, 10, 10);
 			break; 
 		  case "Exit game":
-				g2.fillOval(70, 290, 10, 10);
-				break; 	
+			g2.fillOval(690, 340, 10, 10);
+			break; 	
 		}	
 	}
 	
 	public void drawCurrentGame(Graphics2D g2) {
 		g2.setColor(Color.WHITE);
-		g2.fillRect(0, 0, 400, 400);
+		g2.fillRect(0, 0, 1530, 800);
 		g2.setColor(Color.BLACK);
-		g2.fillRect(395, 0, 10, 400);
-		g2.fillRect(0, 0, 10, 400);		
-		g2.fillRect(0, 0, 400, 10);
-		g2.fillRect(0, 350, 400, 10);
+		g2.fillRect(1530, 0, 10, 800);
+		g2.fillRect(0, 0, 10, 800);		
+		g2.fillRect(0, 0, 1530, 10);
+		g2.fillRect(0, 751, 1530, 10);
 
 		for (int i = 1; i <= snake.getList().size(); i++) { 
 			g2.fillRect(snake.getList().get(i - 1).x, snake.getList().get(i - 1).y, 10, 10);
@@ -273,26 +280,26 @@ public class GUI {
 		g2.setColor(Color.BLACK);
 		g2.setFont(fontMenu);
 		if (snakeGame.getMinutes() < 10 && snakeGame.getSeconds() < 10)
-			g2.drawString("0" + snakeGame.getMinutes() + ":0" + snakeGame.getSeconds(), 420, 50);
+			g2.drawString("0" + snakeGame.getMinutes() + ":0" + snakeGame.getSeconds(), 1330, 30);
 		else if (snakeGame.getMinutes() < 10 && snakeGame.getSeconds() > 9)
-			g2.drawString("0" + snakeGame.getMinutes() + ":" + snakeGame.getSeconds(), 420, 50);
+			g2.drawString("0" + snakeGame.getMinutes() + ":" + snakeGame.getSeconds(), 1330, 30);
 		else if (snakeGame.getMinutes() > 9 && snakeGame.getSeconds() > 10)
-			g2.drawString(snakeGame.getMinutes() + ":" + snakeGame.getSeconds(), 420, 50);
+			g2.drawString(snakeGame.getMinutes() + ":" + snakeGame.getSeconds(), 1330, 30);
 		else if (snakeGame.getMinutes() > 9 && snakeGame.getSeconds() < 10)
-			g2.drawString(snakeGame.getMinutes() + ":0" + snakeGame.getSeconds(), 420, 50);
-		g2.drawString("Score: " + snakeGame.getScore(), 420, 100);
-		g2.drawString("Max score left: " + snakeGame.getMaxScoreLeft(), 420, 150);
+			g2.drawString(snakeGame.getMinutes() + ":0" + snakeGame.getSeconds(), 1330, 30);
+		g2.drawString("s: " + snakeGame.getScore(), 1405, 30);
+		g2.drawString("m.s.l: " + snakeGame.getMaxScoreLeft(), 1470, 30);
 	}
 	
 	public void drawBlinkAnimation1(Graphics2D g2) {
 		g2.setColor(Color.WHITE);
-		g2.fillRect(0, 0, 400, 400);
+		g2.fillRect(0, 0, 1530, 800);
 		g2.setColor(Color.BLACK);
 		g2.setColor(Color.BLACK);
-		g2.fillRect(395, 0, 10, 400);
-		g2.fillRect(0, 0, 10, 400);		
-		g2.fillRect(0, 0, 400, 10);
-		g2.fillRect(0, 350, 400, 10);
+		g2.fillRect(1530, 0, 10, 800);
+		g2.fillRect(0, 0, 10, 800);		
+		g2.fillRect(0, 0, 1530, 10);
+		g2.fillRect(0, 751, 1530, 10);
 	
 		for (int i = 1; i <= snake.getList().size(); i++) { 
 			g2.fillRect(snake.getList().get(i - 1).x, snake.getList().get(i - 1).y, 10, 10);
@@ -306,86 +313,86 @@ public class GUI {
 	
 	public void drawBlinkAnimation2(Graphics2D g2) {
 		g2.setColor(Color.BLACK);
-		g2.fillRect(395, 0, 10, 400);
-		g2.fillRect(0, 0, 10, 400);		
-		g2.fillRect(0, 0, 400, 10);
-		g2.fillRect(0, 350, 400, 10);
+		g2.fillRect(1530, 0, 10, 800);
+		g2.fillRect(0, 0, 10, 800);		
+		g2.fillRect(0, 0, 1530, 10);
+		g2.fillRect(0, 751, 1530, 10);
 		g2.setColor(Color.WHITE);
-		g2.fillRect(0, 0, 400, 400);
+		g2.fillRect(0, 0, 1530, 800);
 		g2.setColor(Color.BLACK);
-		g2.fillRect(395, 0, 10, 400);
-		g2.fillRect(0, 0, 10, 400);		
-		g2.fillRect(0, 0, 400, 10);
-		g2.fillRect(0, 350, 400, 10);
+		g2.fillRect(1530, 0, 10, 800);
+		g2.fillRect(0, 0, 10, 800);		
+		g2.fillRect(0, 0, 1530, 10);
+		g2.fillRect(0, 751, 1530, 10);
 	}
 	
 	public void drawGameOver(Graphics2D g2) {
 		g2.setColor(Color.BLACK);
-		g2.fillRect(0, 0, 400, 400);
+		g2.fillRect(470, 100, 600, 400);
 		g2.setColor(Color.WHITE);
 		g2.setFont(fontHeader);
-		g2.drawString("Game over! \n Your score: " + snakeGame.getScore(), 100, 100);
+		g2.drawString("Game over! \n Your score: " + snakeGame.getScore(), 680, 170);
 		g2.setFont(fontMenu);
-		g2.drawString("Restart game", 100, 200);
-		g2.drawString("Exit game", 100, 250);
+		g2.drawString("Restart game", 710, 250);
+		g2.drawString("Exit game", 710, 300);
 		
 		switch (snakeGame.getMenuSelection()) {
 		  case "Restart game":
-			g2.fillOval(70, 190, 10, 10);
+			g2.fillOval(680, 240, 10, 10);
 			break; 
 		  case "Exit game":
-			g2.fillOval(70, 240, 10, 10);
+			g2.fillOval(680, 290, 10, 10);
 			break;
 		  case "Difficulty":
-			  g2.fillOval(70, 290, 10, 10);
+			  g2.fillOval(680, 330, 10, 10);
 			  break;
 		}
 	}
 	
 	public void drawStartMenu(Graphics2D g2) {
 		g2.setColor(Color.BLACK);
-		g2.fillRect(0, 0, 400, 400);
+		g2.fillRect(500, 100, 600, 400);
 		g2.setColor(Color.WHITE);
 		g2.setFont(fontHeader);
-		g2.drawString("Snake", 100, 100);
+		g2.drawString("Snake Game", 750, 170);
 		g2.setFont(fontMenu);
-		g2.drawString("Start game", 100, 200);
-		g2.drawString("Difficulty:", 100, 250);
-		g2.drawString("Exit game", 100, 300);
-		g2.drawString("Easy", 205, 250);
-		g2.drawString("Normal", 255, 250);
-		g2.drawString("Hard", 305, 250);
+		g2.drawString("Start game", 610, 250);
+		g2.drawString("Difficulty:", 610, 300);
+		g2.drawString("Exit game", 610, 350);
+		g2.drawString("Easy", 810, 300);
+		g2.drawString("Normal", 864, 300);
+		g2.drawString("Hard", 930, 300);
 
 		switch (snakeGame.getMenuSelection()) {
 		  case "Start game":
-			g2.fillOval(70, 190, 10, 10);
+			g2.fillOval(570, 240, 10, 10);
 			break; 
 		  case "Difficulty":
-			g2.fillOval(70, 240, 10, 10);
+			g2.fillOval(570, 290, 10, 10);
 			break; 
 		  case "Exit game":
-				g2.fillOval(70, 290, 10, 10);
-				break; 
+			g2.fillOval(570, 340, 10, 10);
+			break; 
 		}
 	
 		switch(snakeGame.getDifficultyLevel()) {
 			case 0:
-				g2.drawRect(202, 239, 31, 14);		
+				g2.drawRect(806, 288, 35, 16);
 				break;
 			case 1:
-				g2.drawRect(252, 239, 45, 14);
+				g2.drawRect(859, 288, 50, 16);
 				break;
 			case 2:
-				g2.drawRect(302, 239, 32, 14);
+				g2.drawRect(926, 288, 35, 16);
 				break;
 		}
 	}
 
-	public SnakeGame getSnakeGame() {
+	public Game getSnakeGame() {
 		return snakeGame;
 	}
 
-	public void setSnakeGame(SnakeGame snakeGame) {
+	public void setSnakeGame(Game snakeGame) {
 		this.snakeGame = snakeGame;
 	}
 

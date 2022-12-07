@@ -1,8 +1,11 @@
-package org.java.snake.game;
+package org.java.snake.game.game;
 
 import java.awt.Rectangle;
+import org.java.snake.game.App;
+import org.java.snake.game.model.Food;
+import org.java.snake.game.model.Snake;
 
-public class SnakeGame implements Runnable {
+public class Game implements Runnable {
 	private boolean started = false;
 	private boolean finishedBlink1 = false;
 	private boolean finishedBlink2 = false;
@@ -19,23 +22,23 @@ public class SnakeGame implements Runnable {
 	
 	private String menuSelection = "Start game";
 	private Snake snake;
-	private SnakeGame snakeGame;
+	private Game snakeGame;
 	private Food food;
 
-	public void startGame(SnakeGame snakeGame) {										
+	public void startGame(Game snakeGame) {										
 		started = true;
 		Thread t = new Thread(snakeGame);
 		menuSelection = "Restart game";
 
 		switch (snakeGame.getDifficultyLevel()) {
 			case 0:
-				snakeGame.setDifficultyLevelTh(300);
+				snakeGame.setDifficultyLevelTh(130);
 				break;
 			case 1:
-				snakeGame.setDifficultyLevelTh(200);
+				snakeGame.setDifficultyLevelTh(100);
 				break;
 			case 2:
-				snakeGame.setDifficultyLevelTh(100);
+				snakeGame.setDifficultyLevelTh(80);
 				break;		
 		}
 		t.start();
@@ -63,7 +66,7 @@ public class SnakeGame implements Runnable {
 		started = false;
 		for (int i = 0; i < 4; i++) {			
 			finishedBlink1 = true;
-			GUI.f1.repaint();
+			GUI.frame.repaint();
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
@@ -71,7 +74,7 @@ public class SnakeGame implements Runnable {
 			}
 			finishedBlink1 = false;
 			finishedBlink2 = true;
-			GUI.f1.repaint();
+			GUI.frame.repaint();
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
@@ -84,7 +87,7 @@ public class SnakeGame implements Runnable {
 		finishedBlink2 = false;
 		finished = true;
 		menuSelection = "Restart game";											
-		GUI.f1.repaint();	
+		GUI.frame.repaint();	
 	}
 	
 	public void run() {	
@@ -122,7 +125,7 @@ public class SnakeGame implements Runnable {
 						startTime += currentTime - startTime + 100;
 					}
 				}
-			GUI.f1.repaint();
+			GUI.frame.repaint();
 
 			try {
 				Thread.sleep(snakeGame.getDifficultyLevelTh());
@@ -139,7 +142,7 @@ public class SnakeGame implements Runnable {
 			else
 				snake.setSnakeY(snake.getSnakeY() - 15);
 		} else if (snake.isSnakeDown() == true) {
-			if (snake.getSnakeY() > 335)
+			if (snake.getSnakeY() > 730)
 				finishGame();
 			else
 				snake.setSnakeY(snake.getSnakeY() + 15);
@@ -149,7 +152,7 @@ public class SnakeGame implements Runnable {
 			else
 				snake.setSnakeX(snake.getSnakeX() - 15);
 		} else if (snake.isSnakeRight() == true) {
-			if (snake.getSnakeX() > 370)
+			if (snake.getSnakeX() > 1510)
 				finishGame();
 			else
 				snake.setSnakeX(snake.getSnakeX() + 15);
@@ -175,8 +178,8 @@ public class SnakeGame implements Runnable {
 	
 	public void placeFood() {
 		if(food.isFoodPlaced() == false) {
-			food.setFoodX((int) (35 + Math.random() * 335));
-			food.setFoodY((int) (35 + Math.random() * 315));
+			food.setFoodX((int) (35 + Math.random() * 1495));
+			food.setFoodY((int) (35 + Math.random() * 710));
 			food.setFoodPlaced(true);
 			snakeGame.maxScoreLeft = 100;
 		}
@@ -214,11 +217,11 @@ public class SnakeGame implements Runnable {
 		this.score = score;
 	}
 
-	public SnakeGame getSnakeGame() {
+	public Game getSnakeGame() {
 		return snakeGame;
 	}
 
-	public void setSnakeGame(SnakeGame snakeGame) {
+	public void setSnakeGame(Game snakeGame) {
 		this.snakeGame = snakeGame;
 	}
 

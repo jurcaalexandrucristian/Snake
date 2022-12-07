@@ -1,10 +1,9 @@
-package org.java.snake.game;
+package org.java.snake.game.model;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
 public class Snake {
-	
 	private int snakeX = 100;
 	private int snakeY = 100;
 	private boolean snakeUp = false;
@@ -12,7 +11,6 @@ public class Snake {
 	private boolean snakeLeft = false;
 	private boolean snakeRight = true;
 	private  ArrayList<Rectangle> list = new ArrayList<Rectangle>();
-	
 	
 	public  ArrayList<Rectangle> getList() {
 		return list;
