@@ -1,8 +1,9 @@
 package org.java.snake.game;
 
 import java.awt.EventQueue;
+import org.java.snake.game.game.GUI;
 
-public class App {	
+public class App {
 	public static GUI gui;
 	
 	public static void main(String[] args) {
