@@ -1,6 +1,6 @@
 <div align="center">
 
-# <img src="src/res/snake.png"> Snake Game
+# <img src="src/res/snake.png"> Snake
 
 </div>
  
