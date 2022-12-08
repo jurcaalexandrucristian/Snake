@@ -1,10 +1,10 @@
 <div align="center">
 
-# <img src="src/res/snake.png"> Snake Game
+# <img src="src/res/snake.png"> Snake
 
 </div>
  
-Snake Game written in Java using Swing library.
+Snake is a simple game written in Java using Swing library.
 
 <br>
 
