@@ -4,7 +4,7 @@
 
 </div>
  
-Snake Game written in Java using Swing library.
+Snake is a simple game written in Java using Swing library.
 
 <br>
 
