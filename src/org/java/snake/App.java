@@ -1,7 +1,7 @@
-package org.java.snake.game;
+package org.java.snake;
 
 import java.awt.EventQueue;
-import org.java.snake.game.game.GUI;
+import org.java.snake.game.GUI;
 
 public class App {
 	public static GUI gui;

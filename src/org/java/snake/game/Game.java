@@ -1,9 +1,10 @@
-package org.java.snake.game.game;
+package org.java.snake.game;
 
 import java.awt.Rectangle;
-import org.java.snake.game.App;
-import org.java.snake.game.model.Food;
-import org.java.snake.game.model.Snake;
+
+import org.java.snake.App;
+import org.java.snake.model.Food;
+import org.java.snake.model.Snake;
 
 public class Game implements Runnable {
 	private boolean started = false;
@@ -152,7 +153,7 @@ public class Game implements Runnable {
 			else
 				snake.setSnakeX(snake.getSnakeX() - 15);
 		} else if (snake.isSnakeRight() == true) {
-			if (snake.getSnakeX() > 1510)
+			if (snake.getSnakeX() > 1249)
 				finishGame();
 			else
 				snake.setSnakeX(snake.getSnakeX() + 15);
@@ -178,7 +179,7 @@ public class Game implements Runnable {
 	
 	public void placeFood() {
 		if(food.isFoodPlaced() == false) {
-			food.setFoodX((int) (35 + Math.random() * 1495));
+			food.setFoodX((int) (35 + Math.random() * 1235));
 			food.setFoodY((int) (35 + Math.random() * 710));
 			food.setFoodPlaced(true);
 			snakeGame.maxScoreLeft = 100;

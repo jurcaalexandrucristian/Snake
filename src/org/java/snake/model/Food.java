@@ -1,4 +1,4 @@
-package org.java.snake.game.model;
+package org.java.snake.model;
 
 public class Food {
 	private int foodX = 0;												

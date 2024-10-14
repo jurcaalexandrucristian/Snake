@@ -1,4 +1,4 @@
-package org.java.snake.game.model;
+package org.java.snake.model;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package org.java.snake.game.game;
+package org.java.snake.game;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -12,8 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import org.java.snake.game.model.Food;
-import org.java.snake.game.model.Snake;
+import org.java.snake.model.Food;
+import org.java.snake.model.Snake;
 
 public class GUI {
 	static JFrame frame;
@@ -31,7 +31,7 @@ public class GUI {
 	
 	public void createGameWindow() {	
 		frame = new JFrame("Snake Game");
-		frame.setSize(1555, 800);
+		frame.setSize(1275, 800);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	
@@ -51,7 +51,7 @@ public class GUI {
 		
 		frame.requestFocus();	
 		frame.repaint();
-		ImageIcon icon = new ImageIcon(getClass().getResource("../../../../../res/snake.png"));
+		ImageIcon icon = new ImageIcon(getClass().getResource("../../../../res/snake.png"));
 		frame.setIconImage(icon.getImage());
 		frame.setVisible(true);
 
@@ -261,12 +261,12 @@ public class GUI {
 	
 	public void drawCurrentGame(Graphics2D g2) {
 		g2.setColor(Color.WHITE);
-		g2.fillRect(0, 0, 1530, 800);
+		g2.fillRect(0, 0, 1251, 800);
 		g2.setColor(Color.BLACK);
-		g2.fillRect(1530, 0, 10, 800);
+		g2.fillRect(1251, 0, 10, 800);
 		g2.fillRect(0, 0, 10, 800);		
-		g2.fillRect(0, 0, 1530, 10);
-		g2.fillRect(0, 751, 1530, 10);
+		g2.fillRect(0, 0, 1250, 10);
+		g2.fillRect(0, 751, 1250, 10);
 
 		for (int i = 1; i <= snake.getList().size(); i++) { 
 			g2.fillRect(snake.getList().get(i - 1).x, snake.getList().get(i - 1).y, 10, 10);
@@ -351,39 +351,39 @@ public class GUI {
 	
 	public void drawStartMenu(Graphics2D g2) {
 		g2.setColor(Color.BLACK);
-		g2.fillRect(500, 100, 600, 400);
+		g2.fillRect(300, 100, 600, 400);
 		g2.setColor(Color.WHITE);
 		g2.setFont(fontHeader);
-		g2.drawString("Snake Game", 750, 170);
+		g2.drawString("Snake Game", 550, 170);
 		g2.setFont(fontMenu);
-		g2.drawString("Start game", 610, 250);
-		g2.drawString("Difficulty:", 610, 300);
-		g2.drawString("Exit game", 610, 350);
-		g2.drawString("Easy", 810, 300);
-		g2.drawString("Normal", 864, 300);
-		g2.drawString("Hard", 930, 300);
+		g2.drawString("Start game", 410, 250);
+		g2.drawString("Difficulty:", 410, 300);
+		g2.drawString("Exit game", 410, 350);
+		g2.drawString("Easy", 610, 300);
+		g2.drawString("Normal", 664, 300);
+		g2.drawString("Hard", 730, 300);
 
 		switch (snakeGame.getMenuSelection()) {
 		  case "Start game":
-			g2.fillOval(570, 240, 10, 10);
+			g2.fillOval(370, 240, 10, 10);
 			break; 
 		  case "Difficulty":
-			g2.fillOval(570, 290, 10, 10);
+			g2.fillOval(370, 290, 10, 10);
 			break; 
 		  case "Exit game":
-			g2.fillOval(570, 340, 10, 10);
+			g2.fillOval(370, 340, 10, 10);
 			break; 
 		}
 	
 		switch(snakeGame.getDifficultyLevel()) {
 			case 0:
-				g2.drawRect(806, 288, 35, 16);
+				g2.drawRect(606, 288, 35, 16);
 				break;
 			case 1:
-				g2.drawRect(859, 288, 50, 16);
+				g2.drawRect(659, 288, 50, 16);
 				break;
 			case 2:
-				g2.drawRect(926, 288, 35, 16);
+				g2.drawRect(726, 288, 35, 16);
 				break;
 		}
 	}
